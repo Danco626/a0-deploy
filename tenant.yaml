@@ -1,0 +1,334 @@
+clientGrants:
+  - client_id: API Explorer Application
+    audience: 'https://danco-hooks.auth0.com/api/v2/'
+    scope:
+      - 'read:client_grants'
+      - 'create:client_grants'
+      - 'delete:client_grants'
+      - 'update:client_grants'
+      - 'read:users'
+      - 'update:users'
+      - 'delete:users'
+      - 'create:users'
+      - 'read:users_app_metadata'
+      - 'update:users_app_metadata'
+      - 'delete:users_app_metadata'
+      - 'create:users_app_metadata'
+      - 'create:user_tickets'
+      - 'read:clients'
+      - 'update:clients'
+      - 'delete:clients'
+      - 'create:clients'
+      - 'read:client_keys'
+      - 'update:client_keys'
+      - 'delete:client_keys'
+      - 'create:client_keys'
+      - 'read:connections'
+      - 'update:connections'
+      - 'delete:connections'
+      - 'create:connections'
+      - 'read:resource_servers'
+      - 'update:resource_servers'
+      - 'delete:resource_servers'
+      - 'create:resource_servers'
+      - 'read:device_credentials'
+      - 'update:device_credentials'
+      - 'delete:device_credentials'
+      - 'create:device_credentials'
+      - 'read:rules'
+      - 'update:rules'
+      - 'delete:rules'
+      - 'create:rules'
+      - 'read:rules_configs'
+      - 'update:rules_configs'
+      - 'delete:rules_configs'
+      - 'read:email_provider'
+      - 'update:email_provider'
+      - 'delete:email_provider'
+      - 'create:email_provider'
+      - 'blacklist:tokens'
+      - 'read:stats'
+      - 'read:tenant_settings'
+      - 'update:tenant_settings'
+      - 'read:logs'
+      - 'read:shields'
+      - 'create:shields'
+      - 'delete:shields'
+      - 'read:anomaly_blocks'
+      - 'delete:anomaly_blocks'
+      - 'update:triggers'
+      - 'read:triggers'
+      - 'read:grants'
+      - 'delete:grants'
+      - 'read:guardian_factors'
+      - 'update:guardian_factors'
+      - 'read:guardian_enrollments'
+      - 'delete:guardian_enrollments'
+      - 'create:guardian_enrollment_tickets'
+      - 'read:user_idp_tokens'
+      - 'create:passwords_checking_job'
+      - 'delete:passwords_checking_job'
+      - 'read:custom_domains'
+      - 'delete:custom_domains'
+      - 'create:custom_domains'
+      - 'read:email_templates'
+      - 'create:email_templates'
+      - 'update:email_templates'
+      - 'read:mfa_policies'
+      - 'update:mfa_policies'
+      - 'read:roles'
+      - 'create:roles'
+      - 'delete:roles'
+      - 'update:roles'
+      - 'read:prompts'
+      - 'update:prompts'
+      - 'read:branding'
+      - 'update:branding'
+  - client_id: Node App
+    audience: 'https://api.examples.com/timesheets'
+    scope:
+      - 'read:timesheets'
+  - client_id: auth0-logs-to-loggly
+    audience: 'https://danco-hooks.auth0.com/api/v2/'
+    scope:
+      - 'read:logs'
+      - 'delete:clients'
+rules: []
+hooks:
+  - name: add-app-metadata
+    script: ./hooks/add-app-metadata.js
+    dependencies: {}
+    enabled: false
+    secrets: {}
+    triggerId: pre-user-registration
+  - name: add-scope
+    script: ./hooks/add-scope.js
+    dependencies: {}
+    enabled: true
+    secrets: {}
+    triggerId: credentials-exchange
+  - name: user-email-validation
+    script: ./hooks/user-email-validation.js
+    dependencies: {}
+    enabled: false
+    secrets: {}
+    triggerId: pre-user-registration
+pages: []
+resourceServers:
+  - name: Timesheet API
+    identifier: 'https://api.examples.com/timesheets'
+    allow_offline_access: false
+    scopes:
+      - value: 'read:timesheets'
+        description: Read timesheets
+      - value: 'delete:timesheets'
+        description: Delete timesheets
+      - value: 'create:timesheets'
+        description: Create a timesheet
+      - value: 'approve:timesheets'
+        description: Approve a timesheet
+    signing_alg: RS256
+    skip_consent_for_verifiable_first_party_clients: true
+    token_lifetime: 86400
+    token_lifetime_for_web: 7200
+clients:
+  - name: API Explorer Application
+    app_type: non_interactive
+    cross_origin_auth: false
+    custom_login_page_on: true
+    grant_types:
+      - authorization_code
+      - implicit
+      - refresh_token
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    oidc_conformant: true
+    refresh_token:
+      rotation_type: non-rotating
+      expiration_type: non-expiring
+    sso_disabled: false
+  - name: CI/CD
+    allowed_clients: []
+    app_type: non_interactive
+    callbacks: []
+    client_aliases: []
+    cross_origin_auth: false
+    custom_login_page_on: true
+    grant_types:
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    native_social_login:
+      apple:
+        enabled: false
+      facebook:
+        enabled: false
+    oidc_conformant: true
+    refresh_token:
+      expiration_type: non-expiring
+      leeway: 0
+      infinite_token_lifetime: true
+      infinite_idle_token_lifetime: true
+      token_lifetime: 31557600
+      idle_token_lifetime: 2592000
+      rotation_type: non-rotating
+    sso_disabled: false
+    token_endpoint_auth_method: client_secret_post
+  - name: Node App
+    allowed_clients: []
+    allowed_logout_urls:
+      - 'http://localhost:3000/'
+    app_type: regular_web
+    callbacks:
+      - 'http://localhost:3000/callback'
+    client_aliases: []
+    client_metadata:
+      approve: 'true'
+    cross_origin_auth: false
+    custom_login_page_on: true
+    description: Node web applications
+    grant_types:
+      - authorization_code
+      - refresh_token
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    native_social_login:
+      apple:
+        enabled: false
+    oidc_conformant: true
+    refresh_token:
+      rotation_type: non-rotating
+      expiration_type: non-expiring
+    sso_disabled: false
+    token_endpoint_auth_method: client_secret_post
+    web_origins:
+      - 'http://localhost:3000/'
+  - name: auth0-logs-to-loggly
+    cross_origin_auth: false
+    custom_login_page_on: true
+    grant_types:
+      - authorization_code
+      - implicit
+      - refresh_token
+      - client_credentials
+    is_first_party: true
+    is_token_endpoint_ip_header_trusted: false
+    jwt_configuration:
+      alg: RS256
+      lifetime_in_seconds: 36000
+      secret_encoded: false
+    oidc_conformant: true
+    refresh_token:
+      rotation_type: non-rotating
+      expiration_type: non-expiring
+    sso_disabled: false
+databases:
+  - name: EmailTestDb
+    strategy: auth0
+    enabled_clients:
+      - API Explorer Application
+      - auth0-logs-to-loggly
+      - CI/CD
+    is_domain_connection: false
+    options:
+      mfa:
+        active: true
+        return_enroll_settings: true
+      validation:
+        username:
+          max: 15
+          min: 1
+      disable_signup: false
+      passwordPolicy: good
+      strategy_version: 2
+      requires_username: true
+      brute_force_protection: true
+    realms:
+      - EmailTestDb
+  - name: Username-Password-Authentication
+    strategy: auth0
+    enabled_clients:
+      - API Explorer Application
+      - auth0-logs-to-loggly
+      - CI/CD
+      - Node App
+    is_domain_connection: false
+    options:
+      mfa:
+        active: true
+        return_enroll_settings: true
+      passwordPolicy: good
+      strategy_version: 2
+      brute_force_protection: true
+    realms:
+      - Username-Password-Authentication
+connections:
+  - name: google-oauth2
+    strategy: google-oauth2
+    enabled_clients:
+      - API Explorer Application
+      - auth0-logs-to-loggly
+      - CI/CD
+      - Node App
+    is_domain_connection: false
+    options:
+      email: true
+      scope:
+        - email
+        - profile
+      profile: true
+tenant:
+  enabled_locales:
+    - en
+  flags:
+    disable_clickjack_protection_headers: false
+    include_email_in_reset_pwd_redirect: true
+    include_email_in_verify_email_redirect: true
+emailProvider: {}
+emailTemplates: []
+rulesConfigs: []
+guardianFactors:
+  - name: duo
+    enabled: false
+  - name: email
+    enabled: false
+  - name: otp
+    enabled: false
+  - name: push-notification
+    enabled: false
+  - name: recovery-code
+    enabled: false
+  - name: sms
+    enabled: false
+  - name: webauthn-platform
+    enabled: false
+  - name: webauthn-roaming
+    enabled: false
+guardianFactorProviders: []
+guardianFactorTemplates: []
+guardianPolicies:
+  policies: []
+guardianPhoneFactorSelectedProvider:
+  provider: auth0
+guardianPhoneFactorMessageTypes:
+  message_types: []
+roles: []
+branding: {}
+prompts:
+  universal_login_experience: classic
+migrations:
+  legacy_tls: true
